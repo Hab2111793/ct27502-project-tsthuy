@@ -1,6 +1,6 @@
 <?php
 
-namespace CT275\Labs;
+namespace CT275\Project;
 
 class Paginator
 {
