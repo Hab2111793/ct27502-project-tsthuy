@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../src/bootstrap.php';
 
-use CT275\Labs\Contact;
+use CT275\Project\Contact;
 
 $contact = new Contact($PDO);
 if (
