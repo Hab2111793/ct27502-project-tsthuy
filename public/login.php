@@ -1,3 +1,47 @@
+<?php
+session_start(); // Khởi động phiên làm việc
+
+// Kiểm tra nếu người dùng đã đăng nhập, chuyển hướng đến trang home
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    header('Location: home.php');
+    exit();
+}
+
+// Kiểm tra khi người dùng nhấn nút đăng nhập
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Kết nối đến cơ sở dữ liệu
+    require_once "connect.php";
+
+    // Lấy dữ liệu từ form đăng nhập
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Truy vấn kiểm tra thông tin đăng nhập
+    $query = "SELECT * FROM quantrivien WHERE email = :email AND matKhau = :password";
+    $statement = $pdo->prepare($query);
+    $statement->execute([
+        ':email' => $email,
+        ':password' => $password
+    ]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    // Kiểm tra xem người dùng có tồn tại hay không
+    if ($user) {
+        // Lưu thông tin người dùng vào phiên làm việc
+        $_SESSION['loggedin'] = true;
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['email'] = $user['email'];
+
+        // Chuyển hướng người dùng đến trang home sau khi đăng nhập thành công
+        header('Location: home.php');
+        exit();
+    } else {
+        // Đăng nhập không thành công, chuyển hướng người dùng đến trang đăng nhập với thông báo lỗi
+        header('Location: login.php?error=invalid_credentials');
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

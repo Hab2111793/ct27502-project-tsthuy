@@ -39,12 +39,7 @@ if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
             <input type="hidden" name="maSach" value="<?php echo htmlspecialchars($_GET['maSach']); ?>">
             <button type="submit" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Tìm kiếm</button>
         </form>
-        <!-- Kết thúc phần tìm kiếm -->
 
-        <!-- Dropdown danh sách thể loại sách -->
-        <!-- Kết thúc dropdown danh sách thể loại sách -->
-
-        <!-- Thêm phần Độc giả -->
         <a href="index.php" class="hover:text-gray-300">Độc giả</a>
 
         <!-- Thêm phần Thẻ thư viện -->
@@ -103,7 +98,7 @@ if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
             </table>
         <?php endif; ?>
 
-        <h2 class="text-2xl font-semibold mb-4">Mượn Sách</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-center uppercase">Mượn Sách</h2>
         <!-- Danh sách độc giả tìm được -->
 
 
@@ -130,18 +125,16 @@ if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
                     }
                 }
                 ?>
-                <h3 class="text-lg font-semibold mb-2">Thông tin sách</h3>
+                <h1 class="text-xl font-semibold mb-2">Thông tin sách</h1>
 
-                <div class="bg-white p-4 shadow-inner rounded border-2 border-indigo-600 flex justify-content-between ">
+                <div class="bg-white p-2  shadow-inner rounded border-2 border-indigo-600 flex ">
                     <div class="">
-                        <h3 class="text-lg font-semibold mb-2"><?php echo htmlspecialchars($row['tenSach']); ?></h3>
+                        <h3 class="text-lg font-semibold mb-2 text-red-500"><?php echo htmlspecialchars($row['tenSach']); ?></h3>
                         <p class="text-gray-600 mb-4">Mã Sách: <?php echo htmlspecialchars($row['maSach']); ?></p>
                         <p class="text-gray-600 mb-4">Tác giả: <?php echo htmlspecialchars($row['maTG']); ?></p>
                         <p class="text-gray-600 mb-4">Nhà xuất bản: <?php echo htmlspecialchars($row['maNXB']); ?></p>
                     </div>
-                    <div class="">
-                        <img src="https://source.unsplash.com/random/300x200" alt="Book Image" class="rounded-lg">
-                    </div>
+
                 </div>
 
                 <!-- Thông tin người mượn -->

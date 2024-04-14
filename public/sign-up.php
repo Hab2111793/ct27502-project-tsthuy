@@ -1,3 +1,53 @@
+<?php
+session_start(); // Khởi động session
+require_once "connect.php"; // Kết nối đến cơ sở dữ liệu
+
+// Xử lý khi người dùng nhấn nút "Đăng ký"
+if (isset($_POST['signup'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    try {
+        // Kiểm tra email đã tồn tại hay chưa
+        $query = "SELECT * FROM quantrivien WHERE email = :email";
+        $statement = $pdo->prepare($query);
+        $statement->execute([':email' => $email]);
+        $existingUser = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($existingUser) {
+            // Email đã tồn tại, thông báo lỗi hoặc redirect đến trang đăng ký với thông báo lỗi
+            header('Location: signup.php?error=email_taken');
+            exit();
+        } else {
+            // Thêm người dùng mới vào cơ sở dữ liệu
+            $query = "INSERT INTO quantrivien (email, tenQTV, matKhau) VALUES (:email, :name, :password)";
+            $statement = $pdo->prepare($query);
+            $statement->execute([
+                ':email' => $email,
+                ':name' => $name,
+                ':password' => $password
+            ]);
+
+            // Đăng ký thành công, thực hiện các hành động cần thiết (ví dụ: redirect đến trang đăng nhập với thông báo thành công)
+            header('Location: login.php?signup_success=true');
+            exit();
+        }
+    } catch (PDOException $e) {
+        if ($e->getCode() === '45000') {
+            // Lỗi từ trigger, hiển thị thông báo lỗi
+            $error_message = $e->getMessage();
+            header('Location: signup.php?error=' . urlencode($error_message));
+            echo "Error: " . $error_message;
+            // exit();
+        } else {
+            // Xử lý các lỗi khác nếu cần
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +68,7 @@
         </div>
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                <form class="space-y-6" action="YOUR_ACTION_URL" method="POST">
+                <form class="space-y-6" action="sign-up.php" method="POST">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">
                             Full Name
@@ -48,23 +98,11 @@
 
                     <div>
                         <label for="avatar" class="block text-sm font-medium text-gray-700"></label>
-                        <div class="mt-2 flex items-center">
-                            <span class="inline-block h-8 w-8 rounded-full overflow-hidden">
-                                <?php if ($avatar) : ?>
-                                    <img src="<?php echo $avatar; ?>" alt="avatar" class="h-full w-full object-cover rounded-full" />
-                                <?php else : ?>
-                                    <RxAvatar class="h-8 w-8" />
-                                <?php endif; ?>
-                            </span>
-                            <label for="file-input" class="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                <span>Upload a file</span>
-                                <input type="file" name="avatar" id="file-input" accept=".jpg,.jpeg,.png" class="sr-only">
-                            </label>
-                        </div>
+
                     </div>
 
                     <div>
-                        <button type="submit" class="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                        <button name="signup" type="submit" class="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
                             Submit
                         </button>
                     </div>

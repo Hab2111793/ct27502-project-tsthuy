@@ -89,9 +89,7 @@ foreach ($result as $row) {
 
         </div>
     </div>
-    <?php
-    require_once "footer.php";
-    ?>
+
 </body>
 <script>
     function toggleStatistics() {

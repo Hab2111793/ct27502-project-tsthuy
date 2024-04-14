@@ -54,13 +54,16 @@ if (isset($_GET['maBanSao'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style_copy.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <title>Edit Copy</title>
 </head>
 
 <body>
+    <a href="book_copy.php" class="text-white pb-2 px-3 rounded hover:text-blue-600 text-4xl bg-blue-500">&larr;</a>
 
     <div class="container">
-        <h1>Edit Copy</h1>
+        <h1 class="text-center bold">Edit Copy</h1>
 
         <?php if (isset($_SESSION['update_copy_result'])) : ?>
             <p><?php echo $_SESSION['update_copy_result']; ?></p>

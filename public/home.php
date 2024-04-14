@@ -42,22 +42,14 @@ if (isset($_GET['category'])) {
 }
 
 foreach ($books as $book) {
-    $html_books .= '<div class="bg-white p-4 shadow rounded text-center md:flex md:items-center mb-6">';
-
-    // Thêm phần ảnh sách bên trái
-    $random_image_url = 'https://source.unsplash.com/random/300x200'; // Đường dẫn ngẫu nhiên từ Unsplash
-    $html_books .= '<img src="' . $random_image_url . '" alt="Book Image" class="md:mr-6 mb-4 rounded" style="width: 100px; height: auto;">';
-    // Thêm thông tin sách bên phải
-    $html_books .= '<div class="md:text-left text-center">';
-    $html_books .= '<h3 class="text-lg font-semibold mb-2 uppercase">' . htmlspecialchars($book['tenSach']) . '</h3>';
+    $html_books .= '<div class="bg-white p-4 shadow rounded text-center">';
+    $html_books .= '<h3 class="text-lg font-semibold mb-2 text-red-500">' . htmlspecialchars($book['tenSach']) . '</h3>';
     $html_books .= '<p class="text-gray-600 mb-4">Tác giả: ' . htmlspecialchars($book['maTG']) . '</p>';
     $html_books .= '<p class="text-gray-600 mb-4">Nhà xuất bản: ' . htmlspecialchars($book['maNXB']) . '</p>';
-    $html_books .= '<a href="borrow.php?maSach=' . $book['maSach'] . '" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">Mượn sách</a>';
-    $html_books .= '</div>';
+    $html_books .= '<a href="borrow.php?maSach=' . $book['maSach'] . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Mượn sách</a>';
+    // $html_books .= '<a href="book.php?maSach=' . $book['maSach'] . '" class="bg-purple-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full ml-2">Quản lý sách</a>';
     $html_books .= '</div>';
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +71,7 @@ foreach ($books as $book) {
 
     <!-- Phần Content -->
     <div class="container mx-auto py-8">
-        <h2 class="text-2xl font-semibold mb-4">Danh sách các loại sách</h2>
+        <h2 class="text-2xl font-semibold mb-4 uppercase text-center">Danh sách các loại sách</h2>
 
         <!-- Hiển thị các loại sách -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -93,7 +85,6 @@ foreach ($books as $book) {
             <p class="text-center">&copy; 2024 Hệ thống quản lý thư viện. All rights reserved.</p>
         </div>
     </footer> -->
-    <?php include_once 'footer.php'; ?>
 </body>
 
 </html>
