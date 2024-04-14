@@ -58,30 +58,16 @@ $total_books = $result['total_books'];
 <body class="font-sans bg-white">
 
     <!-- Header -->
-    <header class="bg-gray-800 text-white py-4">
+    <header class="bg-blue-700 text-white p-4 uppercase ">
         <div class="container mx-auto flex justify-between items-center px-4">
             <a href="home.php" class="text-2xl font-bold">Hệ thống quản lý thư viện</a>
-            <form action="home.php" method="GET" class="flex items-center">
-                <input type="text" name="keyword" placeholder="Tìm kiếm sách" class="p-2 border rounded-md mr-2 text-black">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Tìm kiếm</button>
-            </form>
-            <div class="relative">
-                <select onchange="location = this.value;" class="block appearance-none w-full bg-blue-500 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-md shadow leading-tight focus:outline-none focus:bg-black focus:border-gray-500">
-                    <option selected disabled>Chọn thể loại sách</option>
-                    <?php foreach ($categories as $category) : ?>
-                        <option value="home.php?category=<?php echo urlencode($category['tenLoai']); ?>"><?php echo $category['tenLoai']; ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M14.293 7.293a1 1 0 0 0-1.414-1.414l-3 3a1 1 0 0 0-.001 1.415l3 3a1 1 0 0 0 1.415-1.415L11.414 11H16a1 1 0 0 0 0-2h-4.586l2.293-2.293z" />
-                    </svg>
-                </div>
-            </div>
-            <a href="index.php" class="hover:text-gray-300">Độc giả</a>
-            <a href="thethuvien.php" class="hover:text-gray-300">Thẻ thư viện</a>
+
+
+
             <nav>
                 <ul class="flex space-x-4">
+                    <li><a href="index.php" class="hover:text-gray-300">Độc giả</a></li>
+                    <li><a href="thethuvien.php" class="hover:text-gray-300">Thẻ thư viện</a></li>
                     <li><a href="book_manage.php" class="hover:text-gray-300">Quản lý sách</a></li>
                     <li><a href="return.php" class="hover:text-gray-300">Trả sách</a></li>
                     <li><a href="lichsumuontra.php" class="hover:text-gray-300">Lịch sử mượn trả</a></li>
@@ -110,7 +96,7 @@ $total_books = $result['total_books'];
 
         <!-- Danh sách sách -->
 
-        <h2 class="text-2xl font-bold mb-4">Books( <?php echo "Tổng số lượng sách: " . $total_books; ?> )</h2>
+        <h2 class="text-2xl font-bold mb-4 uppercase text-center">Books( <?php echo "Tổng số lượng sách: " . $total_books; ?> )</h2>
         <div class="overflow-x-auto">
             <table class="w-full table-auto">
                 <thead>
@@ -161,7 +147,7 @@ $total_books = $result['total_books'];
 
         <!-- Form thêm sách mới -->
         <h2 class="text-2xl font-bold mt-8">Add New Book</h2>
-        <form action="./add_book.php" method="POST" class="mt-4">
+        <form action="./add_book.php" method="POST" class="mt-4" enctype="multipart/form-data">
             <input type="text" name="maSach" placeholder="Mã Sách" class="p-2 border rounded-md mr-2 text-black">
             <input type="text" name="tenSach" placeholder="Tên Sách" class="p-2 border rounded-md mr-2 text-black">
             <input type="text" name="maTG" placeholder="Mã Tác Giả" class="p-2 border rounded-md mr-2 text-black">
@@ -187,6 +173,16 @@ $total_books = $result['total_books'];
     window.onload = function() {
         hideMessage();
     };
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('avatar-preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
 </script>
 <style>
     .alert-message {

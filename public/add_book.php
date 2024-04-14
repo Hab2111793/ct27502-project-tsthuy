@@ -2,8 +2,6 @@
 session_start(); // Khởi động session
 
 require_once "connect.php";
-
-// Thực hiện thêm sách
 if (
     isset($_POST['maSach']) && isset($_POST['tenSach'])
     && isset($_POST['maTG']) && isset($_POST['maNXB']) && isset($_POST['maLoai'])

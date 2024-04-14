@@ -67,6 +67,7 @@ if (isset($_GET['maSach'])) {
     <!-- Thêm Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+<a href="book_manage.php" class="text-white py-1 px-3 rounded hover:text-blue-600 text-4xl bg-blue-500">&larr;</a>
 
 <body class="bg-gray-100">
 
